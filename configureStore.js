@@ -7,7 +7,7 @@ import rootReducer from './modules';
 
 const persistConfig = {
   key: 'auth',
-  AsyncStorage,
+  storage: AsyncStorage,
 };
 
 const configureStore = () => {
@@ -21,7 +21,7 @@ const configureStore = () => {
     applyMiddleware(...middlewares),
     autoRehydrate(),
   );
-  if (typeof self === 'object') persistStore(store, persistConfig);
+  persistStore(store, persistConfig);
   return store;
 };
 

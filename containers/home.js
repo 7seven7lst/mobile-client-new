@@ -4,12 +4,24 @@ import { connect } from 'react-redux';
 import * as action from '../modules/auth/actions';
 
 class HomePage extends Component {
+  componentDidMount() {
+    const { isAuthenticated, navigation } = this.props;
+    console.log("home isAutenticated???>>", isAuthenticated);
+    if (!isAuthenticated) {
+      navigation.navigate('login');
+    }
+  }
+
   logout(e){
     const { navigation } = this.props;
     this.props.logout();
     navigation.navigate('auth');
   }
   render() {
+    const { isAuthenticated, navigation } = this.props;
+    if (!isAuthenticated) {
+      navigation.navigate('login');
+    }
     return (
       <View style={styles.container}>
         <Text>Home</Text>
@@ -41,6 +53,16 @@ const styles = StyleSheet.create({
   },
 });
 
+function mapStateToProps(state) {
+  console.log("state is>>>", state);
+  const { auth } = state;
+  const { loading, isAuthenticated } = auth;
+  return {
+    loading,
+    isAuthenticated
+  };
+}
+
 const mapDispatchToProps = (dispatch, ownProps) => {
   return {
     logout: () => {
@@ -49,4 +71,4 @@ const mapDispatchToProps = (dispatch, ownProps) => {
   }
 }
 
-export default connect(null, mapDispatchToProps)(HomePage);
+export default connect(mapStateToProps, mapDispatchToProps)(HomePage);

@@ -26,14 +26,19 @@ class LoginPage extends Component {
     })
   }
 
-  componentWillMount() {
+  componentDidMount() {
     const { isAuthenticated, navigation } = this.props;
+    console.log("login isAutenticated???>>", isAuthenticated);
     if (isAuthenticated) {
       navigation.navigate('main');
     }
   }
 
   render() {
+    const { isAuthenticated, navigation } = this.props;
+    if (isAuthenticated) {
+      navigation.navigate('main');
+    }
     return (
       <View style={styles.container}>
         <StatusBar barStyle="light-content"/>
@@ -78,7 +83,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'rgba(225,225,225,0.2)',
     marginBottom: 10,
     padding: 10,
-    color: '#fff'
+    color: 'black'
   },
   buttonContainer:{
     width: 200,
