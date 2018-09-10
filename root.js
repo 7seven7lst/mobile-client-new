@@ -3,6 +3,7 @@ import { Provider } from 'react-redux';
 import { StyleSheet, Text, View, Alert } from 'react-native';
 import { TabNavigator, StackNavigator } from 'react-navigation';
 import LoginPage from './containers/login';
+import SignupPage from './containers/signup';
 import HomePage from './containers/home';
 import configureStore from './configureStore';
 
@@ -11,7 +12,8 @@ const store = configureStore();
 class Root extends React.Component {
   render() {
     const MainNavigator = TabNavigator({
-      auth: { screen: LoginPage },
+      login: { screen: LoginPage },
+      signup: { screen: SignupPage },
       main: { screen: HomePage},
     },
     {

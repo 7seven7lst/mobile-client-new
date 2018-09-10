@@ -26,6 +26,12 @@ class LoginPage extends Component {
     })
   }
 
+  gotoSignup(e) {
+    e.preventDefault();
+    const { navigation } = this.props;
+    navigation.navigate('signup');
+  }
+
   componentDidMount() {
     const { isAuthenticated, navigation } = this.props;
     console.log("login isAutenticated???>>", isAuthenticated);
@@ -63,7 +69,10 @@ class LoginPage extends Component {
         />
         <TouchableOpacity style={styles.buttonContainer} onPress={e=>{this.handleSubmit(e)}}>
           <Text  style={styles.buttonText}>LOGIN</Text>
-        </TouchableOpacity> 
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.buttonContainer} onPress={e=>{this.gotoSignup(e)}}>
+          <Text  style={styles.buttonText}>Goto Signup</Text>
+        </TouchableOpacity>  
       </View>
     );
   }

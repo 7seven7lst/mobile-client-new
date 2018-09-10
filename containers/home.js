@@ -15,7 +15,7 @@ class HomePage extends Component {
   logout(e){
     const { navigation } = this.props;
     this.props.logout();
-    navigation.navigate('auth');
+    navigation.navigate('login');
   }
   render() {
     const { isAuthenticated, navigation } = this.props;
