@@ -1,14 +1,9 @@
 import { createStore, applyMiddleware, compose } from 'redux';
-import thunk from 'redux-thunk';
 import { createLogger } from 'redux-logger';
+import thunk from 'redux-thunk';
+import { REHYDRATE, PURGE, persistCombineReducers, persistStore } from 'redux-persist';
 import { AsyncStorage } from 'react-native';
-import { persistStore, autoRehydrate } from 'redux-persist';
 import rootReducer from './modules';
-
-const persistConfig = {
-  key: 'auth',
-  storage: AsyncStorage,
-};
 
 const configureStore = () => {
   const middlewares = [thunk];
@@ -18,11 +13,19 @@ const configureStore = () => {
 
   const store = createStore(
     rootReducer,
-    applyMiddleware(...middlewares),
-    autoRehydrate(),
+    undefined,
+    compose(
+      applyMiddleware(...middlewares)
+    ),
   );
-  persistStore(store, persistConfig);
-  return store;
+  
+  let persistor = persistStore(
+    store,
+    null,
+    () => { store.getState()}
+  );
+
+  return { persistor, store };
 };
 
 export default configureStore;

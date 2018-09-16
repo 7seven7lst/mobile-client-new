@@ -2,12 +2,14 @@ import React from 'react';
 import { Provider } from 'react-redux';
 import { StyleSheet, Text, View, Alert } from 'react-native';
 import { createBottomTabNavigator, StackNavigator } from 'react-navigation';
+import { PersistGate } from 'redux-persist/integration/react';
 import LoginPage from './containers/login';
 import SignupPage from './containers/signup';
 import HomePage from './containers/home';
+import NotFoundPage from './containers/notFound';
 import configureStore from './configureStore';
 
-const store = configureStore();
+const { persistor, store } = configureStore();
 
 class Root extends React.Component {
   render() {
@@ -25,7 +27,13 @@ class Root extends React.Component {
 
     return (
       <Provider store={store}>
-        <MainNavigator />
+        <PersistGate
+          loading={<NotFoundPage />}
+          onBeforeLift={() => {}}
+          persistor={persistor}
+        >
+          <MainNavigator />
+        </PersistGate>
       </Provider>
     );
   }
