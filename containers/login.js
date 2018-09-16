@@ -16,7 +16,6 @@ import { FormLabel, FormInput } from 'react-native-elements';
 import { authenticate } from '../modules/auth/actions';
 
 const SCREEN_WIDTH = Dimensions.get('window').width;
-const SCREEN_HEIGHT = Dimensions.get('window').height;
 
 class LoginPage extends Component {
   constructor(props) {
@@ -41,14 +40,6 @@ class LoginPage extends Component {
     e.preventDefault();
     const { navigation } = this.props;
     navigation.navigate('signup');
-  }
-
-  componentDidMount() {
-    const { isAuthenticated, navigation } = this.props;
-    console.log("login isAutenticated???>>", isAuthenticated);
-    if (isAuthenticated) {
-      navigation.navigate('main');
-    }
   }
 
   render() {
