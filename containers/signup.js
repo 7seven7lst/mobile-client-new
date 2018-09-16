@@ -63,9 +63,6 @@ class SignupPage extends Component {
 
   render() {
     const { isAuthenticated, navigation } = this.props;
-    if (isAuthenticated) {
-      navigation.navigate('main');
-    }
     return (
       <KeyboardAvoidingView behavior="padding" style={styles.container}>
         <View style={styles.loginLogo}>

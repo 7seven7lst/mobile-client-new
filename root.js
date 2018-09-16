@@ -20,7 +20,7 @@ class Root extends React.Component {
     },
     {
       navigationOptions: {
-        //tabBarVisible: false,
+        tabBarVisible: false,
       },
       lazyLoad: true
     });

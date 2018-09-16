@@ -19,9 +19,6 @@ class HomePage extends Component {
   }
   render() {
     const { isAuthenticated, navigation } = this.props;
-    if (!isAuthenticated) {
-      navigation.navigate('login');
-    }
     return (
       <View style={styles.container}>
         <Text>Home</Text>
