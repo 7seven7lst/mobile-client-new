@@ -1,7 +1,7 @@
 import React from 'react';
 import { Provider } from 'react-redux';
 import { StyleSheet, Text, View, Alert } from 'react-native';
-import { TabNavigator, StackNavigator } from 'react-navigation';
+import { createBottomTabNavigator, StackNavigator } from 'react-navigation';
 import LoginPage from './containers/login';
 import SignupPage from './containers/signup';
 import HomePage from './containers/home';
@@ -11,14 +11,14 @@ const store = configureStore();
 
 class Root extends React.Component {
   render() {
-    const MainNavigator = TabNavigator({
+    const MainNavigator = createBottomTabNavigator({
       login: { screen: LoginPage },
       signup: { screen: SignupPage },
       main: { screen: HomePage},
     },
     {
       navigationOptions: {
-        tabBarVisible: false,
+        //tabBarVisible: false,
       },
       lazyLoad: true
     });

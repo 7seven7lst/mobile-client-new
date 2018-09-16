@@ -14,9 +14,8 @@ export function authenticate(email, password) {
     }).then(response => {
       const uid = response.headers['uid']
       const client = response.headers['client']
-      const accessToken = response.headers['access-token']
-      const expiry = response.headers['expiry']
-      dispatch(successAuthentication(uid, client, accessToken, expiry))
+      const accessToken = response.headers['access-token'];
+      dispatch(successAuthentication(uid, client, accessToken))
     }).catch(error => {
       dispatch(failAuthentication())
     })
@@ -50,8 +49,8 @@ function startAuthentication() {
   return { type: constants.AUTH_REQUEST };
 }
 
-function successAuthentication(uid, client, accessToken, expiry) {
-  return { type: constants.AUTH_RECEIVED, uid, client, accessToken, expiry };
+function successAuthentication(uid, client, accessToken) {
+  return { type: constants.AUTH_RECEIVED, uid, client, accessToken };
 }
 
 function failAuthentication() {

@@ -1,6 +1,17 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { View, Text, TextInput, Dimensions, TouchableOpacity, Alert, Button ,StyleSheet ,StatusBar} from 'react-native';
+import {
+  View,
+  Text,
+  TextInput,
+  Image,
+  Dimensions,
+  KeyboardAvoidingView,
+  StyleSheet,
+  Button,
+  TouchableOpacity
+} from 'react-native';
+import { FormLabel, FormInput } from 'react-native-elements';
 
 import { authenticate } from '../modules/auth/actions';
 
@@ -46,67 +57,77 @@ class LoginPage extends Component {
       navigation.navigate('main');
     }
     return (
-      <View style={styles.container}>
-        <StatusBar barStyle="light-content"/>
-        <TextInput style={styles.input} 
-          autoCapitalize="none" 
-          onSubmitEditing={() => this.passwordInput.focus()} 
-          autoCorrect={false} 
-          keyboardType='email-address' 
-          returnKeyType="next" 
-          placeholder='Email'
-          onChangeText={email => this.setState({ email })}
-          value={this.state.email}
-          placeholderTextColor='rgba(225,225,225,0.7)'
-        />
-        <TextInput style = {styles.input}   
-          returnKeyType="go" ref={(input)=> this.passwordInput = input} 
-          placeholder='Password'
-          onChangeText={password => this.setState({ password })}
-          value={this.state.password}
-          placeholderTextColor='rgba(225,225,225,0.7)'
-          secureTextEntry
-        />
-        <TouchableOpacity style={styles.buttonContainer} onPress={e=>{this.handleSubmit(e)}}>
-          <Text  style={styles.buttonText}>LOGIN</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.buttonContainer} onPress={e=>{this.gotoSignup(e)}}>
-          <Text  style={styles.buttonText}>Goto Signup</Text>
+      <KeyboardAvoidingView behavior="padding" style={styles.container}>
+        <View style={styles.loginLogo}>
+        </View>
+        <View style={styles.loginForm}>
+          <View style={styles.loginFormContainer}>
+            <FormLabel>Email</FormLabel>
+            <FormInput
+              style={styles.input}
+              autoCapitalize="none" 
+              onSubmitEditing={() => this.passwordInput.focus()} 
+              autoCorrect={false} 
+              keyboardType='email-address' 
+              returnKeyType="next" 
+              placeholder='Email'
+              onChangeText={email => this.setState({ email })}
+              value={this.state.email}
+            />
+            <FormLabel>Password</FormLabel>
+            <FormInput
+              style={styles.input}
+              returnKeyType="go" ref={(input)=> this.passwordInput = input} 
+              placeholder='Password'
+              onChangeText={password => this.setState({ password })}
+              value={this.state.password}
+              secureTextEntry
+            />
+            <TouchableOpacity style={styles.buttoncontainer} onPress={e=>{this.handleSubmit(e)}}>
+              <Text style={styles.buttontext} >Login</Text>
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.buttoncontainer} onPress={e=>{this.gotoSignup(e)}}>
+          <Text  style={styles.buttontext}>Goto Signup</Text>
         </TouchableOpacity>  
-      </View>
+          </View>
+        </View>
+      </KeyboardAvoidingView>
     );
   }
 }
 
 const styles = StyleSheet.create({
   container: {
-    padding: 20,
+    flex: 1,
+    backgroundColor: '#fff',
+    width: Dimensions.get('window').width,
+
+  },
+  loginLogo: {
     flex:1,
-    flexDirection:'column',
-    alignItems:'center',
-    justifyContent:'center'
   },
-  input:{
+  loginForm: {
+    flex: 2,
+  },
+  loginFormContainer: {
+    flex: 1,
+    padding: 20,
+  },
+  input: {
     height: 40,
-    width: 200,
-    backgroundColor: 'rgba(225,225,225,0.2)',
-    marginBottom: 10,
-    padding: 10,
-    color: 'black'
+    backgroundColor: 'rgba(255,255,255, 0.8)',
+    paddingLeft: 10,
+    marginBottom: 15,
   },
-  buttonContainer:{
-    width: 200,
-    backgroundColor: '#2980b6',
-    paddingVertical: 15
+  buttoncontainer: {
+    backgroundColor: '#23618C',
+    marginTop: 10,
+    paddingVertical: 15,
   },
-  buttonText:{
-    color: '#fff',
+  buttontext: {
     textAlign: 'center',
-    fontWeight: '700'
-  }, 
-  loginButton:{
-    backgroundColor:  '#2980b6',
-    color: '#fff'
+    color: '#fff',
+    fontWeight: 'bold',
   },
 });
 
