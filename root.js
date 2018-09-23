@@ -57,10 +57,11 @@ class Root extends React.Component {
       });
   }
   render() {
-    console.log("this.state.message???", this.state.messages);
+    console.log("this.state.message???", this.state.messages, this.state.currentLocale);
     return (
       <IntlProvider
         locale={this.state.currentLocale}
+        key={this.state.currentLocale}
         messages={this.state.messages}
         textComponent={Text}
       >
