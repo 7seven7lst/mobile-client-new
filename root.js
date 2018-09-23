@@ -49,6 +49,7 @@ class Root extends React.Component {
   componentDidMount() {
     Localization.getCurrentLocaleAsync()
       .then(currentLocale => {
+        console.log("currentLocale is >>>", currentLocale);
         this.setState({
           currentLocale,
           messages: localeData[currentLocale],
