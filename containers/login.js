@@ -44,7 +44,7 @@ class LoginPage extends Component {
   }
 
   render() {
-    const { isAuthenticated, navigation, intl } = this.props;
+    const { isAuthenticated, navigation } = this.props;
     return (
       <KeyboardAvoidingView behavior="padding" style={styles.container}>
         <View style={styles.loginLogo}>

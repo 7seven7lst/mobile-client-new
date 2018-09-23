@@ -70,7 +70,7 @@ class Root extends React.Component {
             onBeforeLift={() => {}}
             persistor={persistor}
           >
-            <App />
+            <MainNavigator />
           </PersistGate>
         </Provider>
       </IntlProvider>
