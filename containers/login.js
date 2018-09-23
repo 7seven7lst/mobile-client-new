@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { injectIntl, intlShape, FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
 import {
   View,
@@ -43,10 +44,14 @@ class LoginPage extends Component {
   }
 
   render() {
-    const { isAuthenticated, navigation } = this.props;
+    const { isAuthenticated, navigation, intl } = this.props;
     return (
       <KeyboardAvoidingView behavior="padding" style={styles.container}>
         <View style={styles.loginLogo}>
+          <FormattedMessage
+            id={ 'Login.login' }
+            defaultMessage={ 'Welcome to login screen!' }
+          />
         </View>
         <View style={styles.loginForm}>
           <View style={styles.loginFormContainer}>

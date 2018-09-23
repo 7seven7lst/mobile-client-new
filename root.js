@@ -1,6 +1,8 @@
 import React from 'react';
 import { Provider } from 'react-redux';
 import { StyleSheet, Text, View, Alert } from 'react-native';
+import { DangerZone } from 'expo';
+import { IntlProvider, addLocaleData, injectIntl } from 'react-intl';
 import { createBottomTabNavigator, createSwitchNavigator } from 'react-navigation';
 import { PersistGate } from 'redux-persist/integration/react';
 import AuthLoadingPage from './containers/authLoading';
@@ -9,6 +11,12 @@ import SignupPage from './containers/signup';
 import HomePage from './containers/home';
 import NotFoundPage from './containers/notFound';
 import configureStore from './configureStore';
+import en from 'react-intl/locale-data/en';
+import es from 'react-intl/locale-data/es';
+import localeData from './build/data.json';
+addLocaleData([...en, ...es]);
+
+const { Localization } = DangerZone;
 
 const { persistor, store } = configureStore();
 
@@ -31,17 +39,39 @@ const MainNavigator = createSwitchNavigator({
 });
 
 class Root extends React.Component {
+  constructor(p) {
+    super(p);
+    this.state = { 
+      currentLocale: 'es',
+      messages: localeData['es'],
+    };
+  }
+  componentDidMount() {
+    Localization.getCurrentLocaleAsync()
+      .then(currentLocale => {
+        this.setState({
+          currentLocale,
+          messages: localeData[currentLocale],
+        });
+      });
+  }
   render() {
     return (
-      <Provider store={store}>
-        <PersistGate
-          loading={<NotFoundPage />}
-          onBeforeLift={() => {}}
-          persistor={persistor}
-        >
-          <MainNavigator />
-        </PersistGate>
-      </Provider>
+      <IntlProvider
+        locale={this.state.currentLocale}
+        messages={this.state.messages}
+        textComponent={Text}
+      >
+        <Provider store={store}>
+          <PersistGate
+            loading={<NotFoundPage />}
+            onBeforeLift={() => {}}
+            persistor={persistor}
+          >
+            <App />
+          </PersistGate>
+        </Provider>
+      </IntlProvider>
     );
   }
 }
