@@ -49,7 +49,7 @@ class LoginPage extends Component {
       <KeyboardAvoidingView behavior="padding" style={styles.container}>
         <View style={styles.loginLogo}>
           <FormattedMessage
-            id={ 'Login.login' }
+            id={ 'Login.Login' }
             defaultMessage={ 'Welcome to login screen!' }
           />
         </View>

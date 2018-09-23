@@ -14,7 +14,6 @@ import configureStore from './configureStore';
 import en from 'react-intl/locale-data/en';
 import es from 'react-intl/locale-data/es';
 import localeData from './build/data.json';
-addLocaleData([...en, ...es]);
 
 const { Localization } = DangerZone;
 
@@ -39,41 +38,50 @@ const MainNavigator = createSwitchNavigator({
 });
 
 class Root extends React.Component {
-  constructor(p) {
-    super(p);
-    this.state = { 
-      currentLocale: 'es',
-      messages: localeData['es'],
-    };
+  constructor (props) {
+      super(props)
+
+      this.state = {
+        locale: 'en',
+        localeData: localeData,
+        messages: localeData['en'],
+      }
+      // Import locale data in default environment
+      addLocaleData([...en, ...es]);
+    
+      // TODO: Add custom localization messages you can export them from separate files.
+      // example https://github.com/yahoo/react-intl/wiki/API#definemessages
+      // and use the id in https://github.com/yahoo/react-intl/wiki/Components#formattedmessage
+
+      this.initLocale();
   }
-  componentDidMount() {
-    Localization.getCurrentLocaleAsync()
-      .then(currentLocale => {
-        console.log("currentLocale is >>>", currentLocale);
-        this.setState({
-          currentLocale,
-          messages: localeData[currentLocale],
-        });
+
+  async initLocale() {
+      // Read device locale and update the intl provider via state.
+      var locale = await Localization.getCurrentLocaleAsync();
+      this.setState({
+          locale,
+          messages: this.state.localeData[locale],
       });
   }
+
   render() {
-    console.log("this.state.message???", this.state.messages, this.state.currentLocale);
     return (
       <IntlProvider
-        locale={this.state.currentLocale}
-        key={this.state.currentLocale}
+        locale={this.state.locale}
+        key={this.state.locale}
         messages={this.state.messages}
         textComponent={Text}
       >
-        <Provider store={store}>
-          <PersistGate
-            loading={<NotFoundPage />}
-            onBeforeLift={() => {}}
-            persistor={persistor}
-          >
-            <MainNavigator />
-          </PersistGate>
-        </Provider>
+      <Provider store={store}>
+        <PersistGate
+          loading={<NotFoundPage />}
+          onBeforeLift={() => {}}
+          persistor={persistor}
+        >
+          <MainNavigator />
+        </PersistGate>
+      </Provider>
       </IntlProvider>
     );
   }
